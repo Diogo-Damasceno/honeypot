@@ -11,7 +11,7 @@ import threading
 
 from .store import EventStore
 
-# Banner SSH falso convincente (não é um servidor SSH real).
+
 SSH_BANNER = b"SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.4\r\n"
 
 HTTP_RESPONSE = (
@@ -37,7 +37,7 @@ def handle_ssh(sock: socket.socket, addr, store: EventStore) -> None:
     try:
         sock.sendall(SSH_BANNER)
         data = _recv_line(sock)
-        # Registramos a tentativa de handshake / client banner.
+
         client_banner = data.split("\r\n")[0][:200] if data else ""
         store.log("ssh", ip, port, raw=client_banner, user_agent=client_banner)
     except OSError:
